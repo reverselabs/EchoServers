@@ -7,24 +7,30 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cz.tomascejka.learn.socket.Configuration;
 import cz.tomascejka.learn.socket.strategy.ConnectionStrategy;
 import cz.tomascejka.learn.socket.strategy.ConnectionStrategyException;
 
 public class EchoClientSendOnly implements ConnectionStrategy<String,String> 
 {
+	private static final Logger LOG = LoggerFactory.getLogger(EchoClientSendOnly.class);
 	private Configuration cfg;
 	private Socket socket;
 	private PrintWriter out;
 	private BufferedReader in;
 
 	@SuppressWarnings("static-access")
-	public EchoClientSendOnly(Configuration configuration) {
+	public EchoClientSendOnly(Configuration configuration) 
+	{
 		this.cfg = configuration.getInstance();
 	}
 
 	@Override
-	public void connect() throws ConnectionStrategyException {
+	public void connect() throws ConnectionStrategyException 
+	{
 		String serverHostname = cfg.getHost();
 		try 
 		{
@@ -35,16 +41,14 @@ public class EchoClientSendOnly implements ConnectionStrategy<String,String>
 		} 
 		catch (UnknownHostException e) 
 		{
-			System.err.println("Don't know about host: " + serverHostname);
+			LOG.error("Don't know about host: {}", serverHostname);
 			exitApp();
 		} 
 		catch (IOException e) 
 		{
-			System.err.println("Couldn't get I/O for " + "the connection to: "
-					+ serverHostname);
+			LOG.error("Couldn't get I/O for " + "the connection to: {}", serverHostname);
 			exitApp();
 		}
-
 	}
 
 	@Override
@@ -71,15 +75,18 @@ public class EchoClientSendOnly implements ConnectionStrategy<String,String>
 
 	@Override
 	public void close() throws ConnectionStrategyException {
-		System.out.println("Closing socket...");
+		LOG.info("Closing socket...");
 		if (socket != null) {
-			try {
+			try 
+			{
 				socket.setSoLinger(true, 1);
 				socket.close();
 				socket = null;
-				System.out.println("Socket successfull closed ...");
-			} catch (IOException e) {
-				System.out.println("Problem with closing socket e=" + e);
+				LOG.info("Socket successfull closed ...");
+			} 
+			catch (IOException e) 
+			{
+				LOG.warn("Problem with closing socket e=" + e);
 			}
 		}
 		if (out != null) 
@@ -96,7 +103,7 @@ public class EchoClientSendOnly implements ConnectionStrategy<String,String>
 			} 
 			catch (IOException e) 
 			{
-				System.out.println("Problem with closing inputstream e=" + e);
+				LOG.warn("Problem with closing inputstream e={}", e);
 			}
 		}
 	}
