@@ -1,14 +1,15 @@
-package cz.tomascejka.learn.socket;
+package cz.tomascejka.learn.socket.client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import cz.tomascejka.learn.socket.Configuration;
 import cz.tomascejka.learn.socket.strategy.ConnectionStrategy;
 import cz.tomascejka.learn.socket.strategy.ConnectionStrategyException;
 import cz.tomascejka.learn.socket.strategy.impl.EchoClientSendOnly;
 
-public class EchoClient2 
+public class EchoClient 
 {
 	private static final ConnectionStrategy<String,String> strategy = new EchoClientSendOnly(Configuration.getInstance());
 	

@@ -1,4 +1,4 @@
-package cz.tomascejka.learn.socket;
+package cz.tomascejka.learn.socket.server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,12 +7,14 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class EchoServer2 extends Thread 
+import cz.tomascejka.learn.socket.Configuration;
+
+public class EchoServer extends Thread 
 {
 
 	private Socket clientSocket;
 
-	private EchoServer2(Socket clientSoc) 
+	private EchoServer(Socket clientSoc) 
 	{
 		this.clientSocket = clientSoc;
 		start();
@@ -33,7 +35,7 @@ public class EchoServer2 extends Thread
 				while (true) 
 				{
 					System.out.println("Waiting for Connection");
-					new EchoServer2(serverSocket.accept());
+					new EchoServer(serverSocket.accept());
 				}
 			} 
 			catch (IOException e) 
