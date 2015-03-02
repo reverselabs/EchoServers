@@ -14,7 +14,6 @@ import cz.tomascejka.learn.socket.Configuration;
 
 public class EchoServer extends Thread 
 {
-
 	private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class);
 	private Socket clientSocket;
 
@@ -74,7 +73,7 @@ public class EchoServer extends Thread
 	@Override
 	public void run() 
 	{
-		System.out.println("New Communication Thread Started");
+		LOG.info("New communication thread started, id={}", this.getId());
 		try 
 		{
 			PrintWriter out = new PrintWriter(clientSocket.getOutputStream(),
@@ -86,11 +85,11 @@ public class EchoServer extends Thread
 
 			while ((inputLine = in.readLine()) != null) 
 			{
-				System.out.println("Server: " + inputLine);
+				LOG.info("Server: {}", inputLine);
 				out.println(inputLine);
 				if (inputLine.equals("Bye."))
 				{
-					System.out.println("Closing discussion");
+					LOG.info("Closing discussion");
 					break;
 				}
 			}
@@ -101,7 +100,7 @@ public class EchoServer extends Thread
 		} 
 		catch (IOException e) 
 		{
-			System.err.println("Problem with Communication Server, Exp="+e);
+			LOG.error("Problem with communication.", e);
 			exitApp();
 		}
 	}
