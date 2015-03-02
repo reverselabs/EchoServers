@@ -11,8 +11,8 @@ import cz.tomascejka.learn.socket.Configuration;
 import cz.tomascejka.learn.socket.strategy.ConnectionStrategy;
 import cz.tomascejka.learn.socket.strategy.ConnectionStrategyException;
 
-public class EchoClientSendOnly implements ConnectionStrategy<String,String> {
-
+public class EchoClientSendOnly implements ConnectionStrategy<String,String> 
+{
 	private Configuration cfg;
 	private Socket socket;
 	private PrintWriter out;
@@ -23,9 +23,7 @@ public class EchoClientSendOnly implements ConnectionStrategy<String,String> {
 		this.cfg = configuration.getInstance();
 	}
 
-	/*
-	 * @see cz.tomascejka.learn.socket.strategy.ConnectionStrategy#connect()
-	 */
+	@Override
 	public void connect() throws ConnectionStrategyException {
 		String serverHostname = cfg.getHost();
 		try 
@@ -49,6 +47,7 @@ public class EchoClientSendOnly implements ConnectionStrategy<String,String> {
 
 	}
 
+	@Override
 	public String sendAndRecieve(String data)
 			throws ConnectionStrategyException 
 	{
@@ -70,6 +69,7 @@ public class EchoClientSendOnly implements ConnectionStrategy<String,String> {
 		}
 	}
 
+	@Override
 	public void close() throws ConnectionStrategyException {
 		System.out.println("Closing socket...");
 		if (socket != null) {

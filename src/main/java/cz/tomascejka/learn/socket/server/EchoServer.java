@@ -7,11 +7,15 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cz.tomascejka.learn.socket.Configuration;
 
 public class EchoServer extends Thread 
 {
 
+	private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class);
 	private Socket clientSocket;
 
 	private EchoServer(Socket clientSoc) 
@@ -29,35 +33,39 @@ public class EchoServer extends Thread
 		try 
 		{
 			serverSocket = new ServerSocket(port);
-			System.out.println("Connection Socket Created");
+			LOG.info("Server socket created with port={}", port);
+			
 			try 
 			{
 				while (true) 
 				{
-					System.out.println("Waiting for Connection");
+					LOG.info("Waiting for Connection, socket={}", serverSocket);
 					new EchoServer(serverSocket.accept());
 				}
 			} 
 			catch (IOException e) 
 			{
-				System.err.println("Accept failed. Exp="+e);
+				LOG.error("Accept failed", e);
 				exitApp();
 			}
 		} 
 		catch (IOException e) 
 		{
-			System.err.println("Could not listen on port: "+port);
+			LOG.error("Could not listen on port: {}", port);
 			exitApp();
 		} 
 		finally 
 		{
 			try 
 			{
-				serverSocket.close();
+				if(serverSocket != null)
+				{
+					serverSocket.close();
+				}
 			} 
 			catch (IOException e) 
 			{
-				System.err.println("Could not close port: "+port);
+				LOG.error("Could not listen on port: {}", port);
 				exitApp();
 			}
 		}

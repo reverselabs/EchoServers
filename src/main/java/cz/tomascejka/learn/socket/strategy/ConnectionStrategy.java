@@ -1,13 +1,19 @@
 package cz.tomascejka.learn.socket.strategy;
 
 /**
+ * 
  * Strategy, how to:
  * <ul>
  * <li>performs communication with server.</li>
  * <li>establish connection.</li>
- * <li>send/recieve data to/from server.</li>
+ * <li>send/receive data to/from server.</li>
  * <li>close connection.</li>
  * </ul> 
+ *
+ * @author tomas.cejka
+ *
+ * @param <T> request data
+ * @param <E> response data
  */
 public interface ConnectionStrategy<T,E> {
 	/**

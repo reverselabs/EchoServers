@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import cz.tomascejka.learn.socket.Configuration;
 import cz.tomascejka.learn.socket.strategy.ConnectionStrategy;
 import cz.tomascejka.learn.socket.strategy.ConnectionStrategyException;
@@ -11,6 +14,7 @@ import cz.tomascejka.learn.socket.strategy.impl.EchoClientSendOnly;
 
 public class EchoClient 
 {
+	private static final Logger LOG = LoggerFactory.getLogger(EchoClient.class);
 	private static final ConnectionStrategy<String,String> strategy = new EchoClientSendOnly(Configuration.getInstance());
 	
 	public static void main(String[] args) throws Exception 
@@ -22,7 +26,7 @@ public class EchoClient
 
 			// input will be console
 			BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-			System.out.println("Type Message (\"Bye.\" to quit)");
+			LOG.info("Type Message (\"Bye.\" to quit)");
 
 			try 
 			{
@@ -31,11 +35,11 @@ public class EchoClient
 				{
 					// send data to server/receive response from server
 					String response = strategy.sendAndRecieve(userInput);
-					System.out.println("echo: " + response);
+					LOG.info("echo: {}", response);
 					// end loop
 					if (userInput.equals("Bye.")) 
 					{
-						System.out.println("Client sent: close command ...");
+						LOG.info("Client sent: close command ...");
 						break;
 					}
 				}
@@ -43,7 +47,7 @@ public class EchoClient
 			catch (IOException e) 
 			{
 				String message = "Problem during sending message";
-				System.out.println(message + ", e=" + e);
+				LOG.error(message, e);
 				throw new ConnectionStrategyException(message, e);
 			}
 			
@@ -71,7 +75,7 @@ public class EchoClient
 			} 
 			catch (IOException e) 
 			{
-				System.out.println("Problem with closing bufferedReader, e="+ e);
+				LOG.error("Problem with closing bufferedReader", e);
 			}
 		}		
 	}
