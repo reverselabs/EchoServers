@@ -25,13 +25,13 @@ public class EchoClient
 			strategy.connect();
 
 			// input will be console
-			BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+			BufferedReader inputStream = new BufferedReader(new InputStreamReader(System.in));
 			LOG.info("Type Message (\"Bye.\" to quit)");
 
 			try 
 			{
 				String userInput;
-				while ((userInput = stdIn.readLine()) != null) 
+				while ((userInput = inputStream.readLine()) != null) 
 				{
 					// send data to server/receive response from server
 					String response = strategy.sendAndRecieve(userInput);
@@ -51,7 +51,7 @@ public class EchoClient
 				throw new ConnectionStrategyException(message, e);
 			}
 			
-			closeResources(strategy, stdIn);
+			closeResources(strategy, inputStream);
 		}
 		catch (ConnectionStrategyException e) 
 		{
