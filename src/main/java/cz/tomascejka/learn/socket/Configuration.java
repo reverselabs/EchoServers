@@ -16,7 +16,7 @@ public class Configuration {
 	
 	public int getServerPort() 
 	{
-		return 10008;
+		return 1234567;
 	}
 	
 	public String getHost() 
