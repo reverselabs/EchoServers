@@ -3,6 +3,7 @@ package cz.tomascejka.learn.socket.client;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,48 +20,41 @@ public class EchoClient
 	
 	public static void main(String[] args) throws Exception 
 	{
+		String logPrefix = "["+UUID.randomUUID().toString()+"]";
+		// input will be console
+		BufferedReader inputStream = new BufferedReader(new InputStreamReader(System.in));
 		try 
 		{
 			// establish connection
 			strategy.connect();
-
-			// input will be console
-			BufferedReader inputStream = new BufferedReader(new InputStreamReader(System.in));
-			LOG.info("Type Message (\"Bye.\" to quit)");
-
-			try 
-			{
-				String userInput;
-				while ((userInput = inputStream.readLine()) != null) 
-				{
-					// send data to server/receive response from server
-					String response = strategy.sendAndRecieve(userInput);
-					LOG.info("echo: {}", response);
-					// end loop
-					if (userInput.equals("Bye.")) 
-					{
-						LOG.info("Client sent: close command ...");
-						break;
-					}
-				}
-			} 
-			catch (IOException e) 
-			{
-				String message = "Problem during sending message";
-				LOG.error(message, e);
-				throw new ConnectionStrategyException(message, e);
-			}
 			
-			closeResources(strategy, inputStream);
+			LOG.info("{} Type Message (\"Bye.\" to quit)", logPrefix);
+			String userInput;
+			while ((userInput = inputStream.readLine()) != null) 
+			{
+				// send data to server/receive response from server
+				String response = strategy.sendAndRecieve(logPrefix+";"+userInput);
+				LOG.info("{} echo: {}", logPrefix, response);
+				// end loop
+				if (userInput.equals("Bye.")) 
+				{
+					LOG.info("{} Client sent: close command ...", logPrefix);
+					break;
+				}
+			}
 		}
-		catch (ConnectionStrategyException e) 
+		catch (Exception e) 
 		{
-			throw new RuntimeException("Problem with communication exchange",e);
+			throw new RuntimeException(logPrefix+"Problem with communication exchange",e);
+		}
+		finally 
+		{
+			closeResources(strategy, inputStream, logPrefix);
 		}
 	}
 	
 	@SuppressWarnings("rawtypes")
-	private static void closeResources(ConnectionStrategy strategy, BufferedReader stdIn) 
+	private static void closeResources(ConnectionStrategy strategy, BufferedReader stdIn, String logPrefix) 
 			throws ConnectionStrategyException
 	{
 		// close connection
@@ -75,7 +69,7 @@ public class EchoClient
 			} 
 			catch (IOException e) 
 			{
-				LOG.error("Problem with closing bufferedReader", e);
+				LOG.error(logPrefix+" Problem with closing bufferedReader", e);
 			}
 		}		
 	}

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +13,11 @@ import cz.tomascejka.learn.socket.Configuration;
 import cz.tomascejka.learn.socket.strategy.ConnectionStrategy;
 import cz.tomascejka.learn.socket.strategy.ConnectionStrategyException;
 
+/**
+ * 
+ * @author tomas.cejka
+ *
+ */
 public class EchoClientSendOnly implements ConnectionStrategy<String,String> 
 {
 	private static final Logger LOG = LoggerFactory.getLogger(EchoClientSendOnly.class);
@@ -38,12 +42,7 @@ public class EchoClientSendOnly implements ConnectionStrategy<String,String>
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(
 					socket.getInputStream()));
-		} 
-		catch (UnknownHostException e) 
-		{
-			LOG.error("Don't know about host: {}", serverHostname);
-			exitApp();
-		} 
+		}
 		catch (IOException e) 
 		{
 			LOG.error("Couldn't get I/O for " + "the connection to: {}", serverHostname);
