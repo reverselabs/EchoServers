@@ -9,18 +9,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.tomascejka.learn.socket.Configuration;
-import cz.tomascejka.learn.socket.strategy.ConnectionStrategy;
+import cz.tomascejka.learn.socket.strategy.ConnectionChannel;
 import cz.tomascejka.learn.socket.strategy.ConnectionStrategyException;
-import cz.tomascejka.learn.socket.strategy.impl.EchoClientSendOnly;
+import cz.tomascejka.learn.socket.strategy.impl.StrategyCloseByRstPacket;
 
 public class EchoClient 
 {
 	private static final Logger LOG = LoggerFactory.getLogger(EchoClient.class);
-	private static final ConnectionStrategy<String,String> strategy = new EchoClientSendOnly(Configuration.getInstance());
 	
 	public static void main(String[] args) throws Exception 
 	{
 		String logPrefix = "["+UUID.randomUUID().toString()+"]";
+		ConnectionChannel<String,String> strategy = new StrategyCloseByRstPacket(Configuration.getInstance(), logPrefix);
+		
 		// input will be console
 		BufferedReader inputStream = new BufferedReader(new InputStreamReader(System.in));
 		try 
@@ -28,7 +29,7 @@ public class EchoClient
 			// establish connection
 			strategy.connect();
 			
-			LOG.info("{} Type Message (\"Bye.\" to quit)", logPrefix);
+			LOG.info("{} Type (\"Bye.\" to quit)", logPrefix);
 			String userInput;
 			while ((userInput = inputStream.readLine()) != null) 
 			{
@@ -38,7 +39,7 @@ public class EchoClient
 				// end loop
 				if (userInput.equals("Bye.")) 
 				{
-					LOG.info("{} Client sent: close command ...", logPrefix);
+					LOG.info("{} Client sent: quit command ...", logPrefix);
 					break;
 				}
 			}
@@ -54,7 +55,7 @@ public class EchoClient
 	}
 	
 	@SuppressWarnings("rawtypes")
-	private static void closeResources(ConnectionStrategy strategy, BufferedReader stdIn, String logPrefix) 
+	private static void closeResources(ConnectionChannel strategy, BufferedReader stdIn, String logPrefix) 
 			throws ConnectionStrategyException
 	{
 		// close connection

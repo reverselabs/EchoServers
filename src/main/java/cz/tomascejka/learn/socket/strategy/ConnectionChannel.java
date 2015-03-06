@@ -15,7 +15,7 @@ package cz.tomascejka.learn.socket.strategy;
  * @param <T> request data
  * @param <E> response data
  */
-public interface ConnectionStrategy<T,E> {
+public interface ConnectionChannel<T,E> {
 	/**
 	 * How to establish communication connection safely
 	 * @throws ConnectionStrategyException if anything fails
