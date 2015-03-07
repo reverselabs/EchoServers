@@ -17,17 +17,18 @@ import cz.tomascejka.learn.socket.connectionchannel.ConnectionStrategyException;
  * <li>wraps streams by {@link PrintWriter} and {@link BufferedReader} </li>
  * <li>exchanges data with end-points</li>
  * </ol>
+ * It can be used for exchange without any sub-class implementation
  * 
  * @author tomas.cejka
  *
  */
-public class ConnectionChannelSocketLingerBase extends ConnectionChannelSocketBase<String,String> 
+public class ConnectionChannelSocketImpl extends ConnectionChannelSocketBase<String,String> 
 {
-	private static final Logger LOG = LoggerFactory.getLogger(ConnectionChannelSocketLingerBase.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ConnectionChannelSocketImpl.class);
 	private PrintWriter outputStream;
 	private BufferedReader inputStream;
 
-	public ConnectionChannelSocketLingerBase(Configuration configuration, String logPrefix) 
+	public ConnectionChannelSocketImpl(Configuration configuration, String logPrefix) 
 	{
 		super(configuration, logPrefix);
 	}

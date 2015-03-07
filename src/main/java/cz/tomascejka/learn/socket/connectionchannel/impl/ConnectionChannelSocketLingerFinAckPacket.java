@@ -16,7 +16,7 @@ import cz.tomascejka.learn.socket.connectionchannel.ConnectionStrategyException;
  * @author tomas.cejka
  *
  */
-public class ConnectionChannelSocketLingerFinAckPacket extends ConnectionChannelSocketLingerBase 
+public class ConnectionChannelSocketLingerFinAckPacket extends ConnectionChannelSocketImpl 
 {
 	private static final Logger LOG = LoggerFactory.getLogger(ConnectionChannelSocketLingerFinAckPacket.class);
 
