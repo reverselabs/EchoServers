@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import cz.tomascejka.learn.socket.Configuration;
 import cz.tomascejka.learn.socket.strategy.ConnectionChannel;
 import cz.tomascejka.learn.socket.strategy.ConnectionStrategyException;
-import cz.tomascejka.learn.socket.strategy.impl.StrategyCloseByRstPacket;
+import cz.tomascejka.learn.socket.strategy.impl.StrategyCloseByLingeringRstPacket;
 
 public class EchoClient 
 {
@@ -20,7 +20,7 @@ public class EchoClient
 	public static void main(String[] args) throws Exception 
 	{
 		String logPrefix = "["+UUID.randomUUID().toString()+"]";
-		ConnectionChannel<String,String> strategy = new StrategyCloseByRstPacket(Configuration.getInstance(), logPrefix);
+		ConnectionChannel<String,String> strategy = new StrategyCloseByLingeringRstPacket(Configuration.getInstance(), logPrefix);
 		
 		// input will be console
 		BufferedReader inputStream = new BufferedReader(new InputStreamReader(System.in));

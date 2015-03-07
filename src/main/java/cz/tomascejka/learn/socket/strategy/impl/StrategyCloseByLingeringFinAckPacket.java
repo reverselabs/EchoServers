@@ -16,13 +16,13 @@ import cz.tomascejka.learn.socket.strategy.ConnectionStrategyException;
  * @author tomas.cejka
  *
  */
-public class StrategyCloseByRstPacket extends ConnectionChannelSocketBase<String,String> 
+public class StrategyCloseByLingeringFinAckPacket extends ConnectionChannelSocketBase<String,String> 
 {
-	private static final Logger LOG = LoggerFactory.getLogger(StrategyCloseByRstPacket.class);
+	private static final Logger LOG = LoggerFactory.getLogger(StrategyCloseByLingeringFinAckPacket.class);
 	private PrintWriter outputStream;
 	private BufferedReader inputStream;
 
-	public StrategyCloseByRstPacket(Configuration configuration, String logPrefix) 
+	public StrategyCloseByLingeringFinAckPacket(Configuration configuration, String logPrefix) 
 	{
 		super(configuration, logPrefix);
 	}
@@ -54,7 +54,7 @@ public class StrategyCloseByRstPacket extends ConnectionChannelSocketBase<String
 	@Override
 	protected void preSocketClose() throws ConnectionStrategyException, IOException 
 	{
-		socket.setSoLinger(true, 0);// tohle zaridi RST packet!!!
+		socket.setSoLinger(true, 1);
 	}
 	
 	@Override

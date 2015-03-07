@@ -23,7 +23,7 @@ public interface ConnectionChannel<T,E> {
 	public void connect() throws ConnectionStrategyException;
 	
 	/**
-	 * Send/recieve dat (communication dialog between client/server)
+	 * Send/receive data (communication dialog between client/server)
 	 * @param data request at server
 	 * @return response from server
 	 * @throws ConnectionStrategyException if anything fails
