@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import cz.tomascejka.learn.socket.Configuration;
 import cz.tomascejka.learn.socket.connectionchannel.ConnectionStrategyException;
 import cz.tomascejka.learn.socket.exchangestrategy.ExchangeStrategyException;
-import cz.tomascejka.learn.socket.exchangestrategy.ExchangeStrategySendAndRecieve;
+import cz.tomascejka.learn.socket.exchangestrategy.impl.ExchangeStrategySendAndRecieve;
 
 /**
  * Base class which:

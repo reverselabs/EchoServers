@@ -1,9 +1,19 @@
-package cz.tomascejka.learn.socket.exchangestrategy;
+package cz.tomascejka.learn.socket.exchangestrategy.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import cz.tomascejka.learn.socket.exchangestrategy.ExchangeStrategy;
+import cz.tomascejka.learn.socket.exchangestrategy.ExchangeStrategyException;
+
+/**
+ * Basic exchange between client and server. Request data are without any modify sent to server.
+ * There is same behavior with incoming response data - without modification are returned back.
+ * 
+ * @author tomas.cejka
+ *
+ */
 public class ExchangeStrategySendAndRecieve implements ExchangeStrategy<String, String> {
 
 	@Override
