@@ -1,0 +1,3 @@
+Snahou je se naucit pouziti socket-u v java. 
+
+* Prvnim pripadem je nasimulovat rozdil mezi RST a FIN/ACK packetem. Tento stav pak zanalyzovat via tcpdump.
