@@ -11,10 +11,16 @@ import org.slf4j.LoggerFactory;
 import cz.tomascejka.learn.socket.Configuration;
 import cz.tomascejka.learn.socket.strategy.ConnectionChannel;
 import cz.tomascejka.learn.socket.strategy.ConnectionStrategyException;
-
+/**
+ * Using connection via TCP/IP by {@link Socket}
+ * 
+ * @author tomascejka
+ *
+ * @param <T> request data type
+ * @param <E> response data type
+ */
 public abstract class ConnectionChannelSocketBase<T,E> implements ConnectionChannel<T, E> 
 {
-
 	private static final Logger LOG = LoggerFactory.getLogger(ConnectionChannelSocketBase.class);
 	protected Socket socket;
 	protected OutputStream out;
