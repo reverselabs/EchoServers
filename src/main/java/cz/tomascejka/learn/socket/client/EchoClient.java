@@ -20,21 +20,21 @@ public class EchoClient
 	public static void main(String[] args) throws Exception 
 	{
 		String logPrefix = "["+UUID.randomUUID().toString()+"]";
-		ConnectionChannel<String,String> strategy = new ConnectionChannelSocketLingerFinAckPacket(Configuration.getInstance(), logPrefix);
+		ConnectionChannel<String,String> channel = new ConnectionChannelSocketLingerFinAckPacket(Configuration.getInstance(), logPrefix);
 		
 		// input will be console
 		BufferedReader inputStream = new BufferedReader(new InputStreamReader(System.in));
 		try 
 		{
 			// establish connection
-			strategy.connect();
+			channel.connect();
 			
 			LOG.info("{} Type (\"Bye.\" to quit)", logPrefix);
 			String userInput;
 			while ((userInput = inputStream.readLine()) != null) 
 			{
 				// send data to server/receive response from server
-				String response = strategy.sendAndRecieve(logPrefix+";"+userInput);
+				String response = channel.sendAndRecieve(logPrefix+";"+userInput);
 				LOG.info("{} echo: {}", logPrefix, response);
 				// end loop
 				if (userInput.equals("Bye.")) 
@@ -50,16 +50,16 @@ public class EchoClient
 		}
 		finally 
 		{
-			closeResources(strategy, inputStream, logPrefix);
+			closeResources(channel, inputStream, logPrefix);
 		}
 	}
 	
 	@SuppressWarnings("rawtypes")
-	private static void closeResources(ConnectionChannel strategy, BufferedReader stdIn, String logPrefix) 
+	private static void closeResources(ConnectionChannel channel, BufferedReader stdIn, String logPrefix) 
 			throws ConnectionStrategyException
 	{
 		// close connection
-		strategy.close();
+		channel.close();
 		// close up-level buffer
 		if(stdIn != null)
 		{
