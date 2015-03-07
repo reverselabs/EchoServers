@@ -1,7 +1,6 @@
-package cz.tomascejka.learn.socket.strategy;
+package cz.tomascejka.learn.socket.connectionchannel;
 
 /**
- * 
  * Strategy, how to:
  * <ul>
  * <li>performs communication with server.</li>
@@ -12,8 +11,8 @@ package cz.tomascejka.learn.socket.strategy;
  *
  * @author tomas.cejka
  *
- * @param <T> request data
- * @param <E> response data
+ * @param <T> request data type
+ * @param <E> response data type
  */
 public interface ConnectionChannel<T,E> {
 	/**

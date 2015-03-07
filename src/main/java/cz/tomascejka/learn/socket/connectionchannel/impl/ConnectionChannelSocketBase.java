@@ -1,4 +1,4 @@
-package cz.tomascejka.learn.socket.strategy.impl;
+package cz.tomascejka.learn.socket.connectionchannel.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,12 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.tomascejka.learn.socket.Configuration;
-import cz.tomascejka.learn.socket.strategy.ConnectionChannel;
-import cz.tomascejka.learn.socket.strategy.ConnectionStrategyException;
+import cz.tomascejka.learn.socket.connectionchannel.ConnectionChannel;
+import cz.tomascejka.learn.socket.connectionchannel.ConnectionStrategyException;
 /**
  * Using connection via TCP/IP by {@link Socket}
  * 
- * @author tomascejka
+ * @author tomas.cejka
  *
  * @param <T> request data type
  * @param <E> response data type
@@ -34,6 +34,16 @@ public abstract class ConnectionChannelSocketBase<T,E> implements ConnectionChan
 		this.logPrefix = logPrefix;
 	}
 
+	/**
+	 * It allows to modify flow before connection will be establish
+	 * 
+	 * @throws ConnectionStrategyException
+	 */
+	protected void beforeConnect() throws ConnectionStrategyException
+	{
+		// for override ...
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see cz.tomascejka.learn.socket.strategy.ConnectionStrategy#connect()
@@ -44,11 +54,13 @@ public abstract class ConnectionChannelSocketBase<T,E> implements ConnectionChan
 		String serverHostname = cfg.getHost();
 		try 
 		{
+			beforeConnect();
+			
 			socket = new Socket(serverHostname, cfg.getServerPort());
 			out = socket.getOutputStream();
 			in = socket.getInputStream();
 			
-			connectInternally();//each client can modify connect flow...
+			afterConnect();
 		}
 		catch (Exception e) 
 		{
@@ -58,11 +70,11 @@ public abstract class ConnectionChannelSocketBase<T,E> implements ConnectionChan
 	}
 	
 	/**
-	 * It allows to client wraps existing stream by yours implementations
+	 * It allows to modify flow after connection will be establish
 	 * 
 	 * @throws ConnectionStrategyException
 	 */
-	protected void connectInternally() throws ConnectionStrategyException
+	protected void afterConnect() throws ConnectionStrategyException
 	{
 		// for override ...
 	}
@@ -81,7 +93,11 @@ public abstract class ConnectionChannelSocketBase<T,E> implements ConnectionChan
 		{
 			throw new ConnectionStrategyException(logPrefix+ " Socket for reading is not created, is null. Cannot send message!");
 		}
-		return sendAndRecieveInternally(data);
+
+		LOG.info("{} RQS send to host", logPrefix);
+		E response = exchangeData(data);
+		LOG.info("{} RSP recieve from host", logPrefix);
+		return response;
 	}
 	
 	/**
@@ -91,7 +107,18 @@ public abstract class ConnectionChannelSocketBase<T,E> implements ConnectionChan
 	 * 
 	 * @throws ConnectionStrategyException client decides what use cases are errors
 	 */
-	protected abstract E sendAndRecieveInternally(T data) throws ConnectionStrategyException;
+	protected abstract E exchangeData(T data) throws ConnectionStrategyException;
+
+	/**
+	 * It allows to client executing code before {@link Socket} is closed
+	 * 
+	 * @throws ConnectionStrategyException
+	 * @throws IOException if anything fails during socket modifing
+	 */
+	protected void beforeClose() throws ConnectionStrategyException, IOException 
+	{
+		//for override ...
+	}
 	
 	/*
 	 * (non-Javadoc)
@@ -101,18 +128,17 @@ public abstract class ConnectionChannelSocketBase<T,E> implements ConnectionChan
 	public final void close() throws ConnectionStrategyException 
 	{
 		LOG.info("{} Closing socket...", logPrefix);
-		if (socket != null) {
+		if (socket != null) 
+		{
 			try 
 			{
-				socket.setSoLinger(true, 1);
-				
-				preSocketClose();
+				beforeClose();
 				
 				socket.close();
 				socket = null;
 				LOG.info("{} Closing socket has been successful", logPrefix);
 				
-				postSocketClose();//each client can modify close flow...
+				afterClose();
 			} 
 			catch (IOException e) 
 			{
@@ -122,22 +148,11 @@ public abstract class ConnectionChannelSocketBase<T,E> implements ConnectionChan
 	}
 	
 	/**
-	 * It allows to client execute code before {@link Socket} is closed
-	 * 
-	 * @throws ConnectionStrategyException
-	 * @throws IOException if anything fails during socket modifing
-	 */
-	protected void preSocketClose() throws ConnectionStrategyException, IOException 
-	{
-		//for override ...
-	}
-	
-	/**
-	 * It allows to client execute code after {@link Socket} is closed
+	 * It allows to client executing code after {@link Socket} is closed
 	 * 
 	 * @throws ConnectionStrategyException
 	 */
-	protected void postSocketClose() throws ConnectionStrategyException 
+	protected void afterClose() throws ConnectionStrategyException 
 	{
 		//for override ...
 	}

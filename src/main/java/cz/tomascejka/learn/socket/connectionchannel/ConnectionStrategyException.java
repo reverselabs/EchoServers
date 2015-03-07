@@ -1,4 +1,4 @@
-package cz.tomascejka.learn.socket.strategy;
+package cz.tomascejka.learn.socket.connectionchannel;
 
 public class ConnectionStrategyException extends Exception {
 
