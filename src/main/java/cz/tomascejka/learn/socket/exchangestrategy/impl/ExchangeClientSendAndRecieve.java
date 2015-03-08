@@ -14,7 +14,7 @@ import cz.tomascejka.learn.socket.exchangestrategy.ExchangeStrategyException;
  * @author tomas.cejka
  *
  */
-public class ExchangeStrategySendAndRecieve implements ExchangeStrategy<String, String> {
+public class ExchangeClientSendAndRecieve implements ExchangeStrategy<String, String> {
 
 	@Override
 	public String exchangeData(String data) throws ExchangeStrategyException 

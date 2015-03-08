@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import cz.tomascejka.learn.socket.Configuration;
 import cz.tomascejka.learn.socket.connectionchannel.ConnectionStrategyException;
 import cz.tomascejka.learn.socket.exchangestrategy.ExchangeStrategyException;
-import cz.tomascejka.learn.socket.exchangestrategy.impl.ExchangeStrategySendAndRecieve;
+import cz.tomascejka.learn.socket.exchangestrategy.impl.ExchangeClientSendAndRecieve;
 
 /**
  * Base class which:
@@ -29,7 +29,7 @@ public class ConnectionChannelSocketImpl extends ConnectionChannelSocketBase<Str
 	private static final Logger LOG = LoggerFactory.getLogger(ConnectionChannelSocketImpl.class);
 	private PrintWriter outputStream;
 	private BufferedReader inputStream;
-	private ExchangeStrategySendAndRecieve exchangeStrategy;
+	private ExchangeClientSendAndRecieve exchangeStrategy;
 
 	public ConnectionChannelSocketImpl(Configuration configuration, String logPrefix) 
 	{
@@ -41,7 +41,7 @@ public class ConnectionChannelSocketImpl extends ConnectionChannelSocketBase<Str
 	{
 		outputStream = new PrintWriter(out, true);
 		inputStream = new BufferedReader(new InputStreamReader(in));
-		exchangeStrategy = new ExchangeStrategySendAndRecieve();
+		exchangeStrategy = new ExchangeClientSendAndRecieve();
 		exchangeStrategy.setInputStream(inputStream);
 		exchangeStrategy.setOutputStream(outputStream);
 	}
