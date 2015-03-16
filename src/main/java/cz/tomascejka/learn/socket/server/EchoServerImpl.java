@@ -8,17 +8,34 @@ import org.slf4j.LoggerFactory;
 
 import cz.tomascejka.learn.socket.Configuration;
 
+/**
+ * Facade to start echo server...
+ * 
+ * @author tomas.cejka
+ *
+ */
 public class EchoServerImpl
 {
 	private static final Logger LOG = LoggerFactory.getLogger(EchoServerImpl.class);
 
 	private Configuration cfg;
 	
+	/**
+	 * Configure echo server from outside (change host and port)
+	 * 
+	 * @param configuration
+	 */
 	public EchoServerImpl (Configuration configuration)
 	{
 		this.cfg = configuration;
 	}
 	
+	/**
+	 * Open {@link ServerSocket} and waiting for client request. Each client request
+	 * is managed by own {@link Thread} represented by {@link EchoServerThread}.
+	 * 
+	 * @see EchoServerThread
+	 */
 	public void open()
 	{
 		ServerSocket serverSocket = null;

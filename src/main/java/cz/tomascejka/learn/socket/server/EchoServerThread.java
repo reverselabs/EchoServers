@@ -8,7 +8,13 @@ import java.net.Socket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * <p>Given {@link Socket} - taken from client's side. It is used to
+ * get out/in streams in order to communicate with client.</p>
+ * 
+ * @author tomas.cejka
+ *
+ */
 public class EchoServerThread extends Thread 
 {
 	private static final Logger LOG = LoggerFactory.getLogger(EchoServerThread.class);
@@ -19,6 +25,12 @@ public class EchoServerThread extends Thread
 		this.clientSocket = clientSoc;
 	}
 	
+	/**
+	 * 
+	 * <p>There is used {@link BufferedReader} with line reading strategy... read by lines.
+	 * There is checked special substring 'Bye'. It is used as close command - which close dialog
+	 * and leads to finish communication - closing streams.</p>
+	 */
 	@Override
 	public void run() 
 	{
