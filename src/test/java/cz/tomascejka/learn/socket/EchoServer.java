@@ -14,9 +14,9 @@ import cz.tomascejka.learn.socket.channel.impl.Configuration;
  * @author tomas.cejka
  *
  */
-public class EchoServerImpl
+public class EchoServer
 {
-	private static final Logger LOG = LoggerFactory.getLogger(EchoServerImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class);
 
 	private Configuration cfg;
 	
@@ -25,7 +25,7 @@ public class EchoServerImpl
 	 * 
 	 * @param configuration
 	 */
-	public EchoServerImpl (Configuration configuration)
+	public EchoServer (Configuration configuration)
 	{
 		this.cfg = configuration;
 	}
@@ -81,6 +81,6 @@ public class EchoServerImpl
 	public static void main(String[] args) throws IOException 
 	{
 		Configuration cfg = new Configuration();
-		new EchoServerImpl(cfg).open();
+		new EchoServer(cfg).open();
 	}	
 }
