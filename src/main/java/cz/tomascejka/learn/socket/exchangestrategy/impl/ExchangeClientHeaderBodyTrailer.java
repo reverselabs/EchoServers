@@ -15,9 +15,11 @@ import cz.tomascejka.learn.socket.exchangestrategy.ExchangeStrategyException;
  * There is same behavior with incoming response data - without modification are returned back.
  * 
  * @author tomas.cejka
- *
+ * 
+ * 
+ * TODO [cejka] non-completed!!!
  */
-public class ExchangeClientHeaderBodyTrailer implements ExchangeStrategy<String, String> {
+public class ExchangeClientHeaderBodyTrailer implements ExchangeStrategy<String, String, DataInputStream, PrintWriter> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ExchangeClientHeaderBodyTrailer.class);
 	private static final int HEADER_LENGTH = 2;// 2 byte nominal
@@ -122,12 +124,14 @@ public class ExchangeClientHeaderBodyTrailer implements ExchangeStrategy<String,
 	private PrintWriter outputStream;
 	private DataInputStream inputStream;
 	
-	public void setOutputStream(PrintWriter outputStream) 
+	@Override
+	public void setOutputWriter(PrintWriter outputStream) 
 	{
 		this.outputStream = outputStream;
 	}
 	
-	public void setInputStream(DataInputStream inputStream) 
+	@Override
+	public void setInputReader(DataInputStream inputStream) 
 	{
 		this.inputStream = inputStream;
 	}

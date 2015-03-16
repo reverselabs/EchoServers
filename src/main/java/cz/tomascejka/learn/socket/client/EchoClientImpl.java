@@ -13,9 +13,9 @@ import cz.tomascejka.learn.socket.connectionchannel.ConnectionChannel;
 import cz.tomascejka.learn.socket.connectionchannel.ConnectionStrategyException;
 import cz.tomascejka.learn.socket.connectionchannel.impl.ConnectionChannelSocketLingerFinAckPacket;
 
-public class EchoClient 
+public class EchoClientImpl 
 {
-	private static final Logger LOG = LoggerFactory.getLogger(EchoClient.class);
+	private static final Logger LOG = LoggerFactory.getLogger(EchoClientImpl.class);
 	
 	public static void main(String[] args) throws Exception 
 	{

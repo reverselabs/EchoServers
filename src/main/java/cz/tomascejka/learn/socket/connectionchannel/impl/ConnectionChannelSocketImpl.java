@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import cz.tomascejka.learn.socket.Configuration;
 import cz.tomascejka.learn.socket.connectionchannel.ConnectionStrategyException;
+import cz.tomascejka.learn.socket.exchangestrategy.ExchangeStrategy;
 import cz.tomascejka.learn.socket.exchangestrategy.ExchangeStrategyException;
 import cz.tomascejka.learn.socket.exchangestrategy.impl.ExchangeClientSendAndRecieve;
 
@@ -27,9 +28,8 @@ import cz.tomascejka.learn.socket.exchangestrategy.impl.ExchangeClientSendAndRec
 public class ConnectionChannelSocketImpl extends ConnectionChannelSocketBase<String,String> 
 {
 	private static final Logger LOG = LoggerFactory.getLogger(ConnectionChannelSocketImpl.class);
-	private PrintWriter outputStream;
-	private BufferedReader inputStream;
-	private ExchangeClientSendAndRecieve exchangeStrategy;
+	private PrintWriter outputWriter;
+	private BufferedReader inputReader;
 
 	public ConnectionChannelSocketImpl(Configuration configuration, String logPrefix) 
 	{
@@ -39,11 +39,8 @@ public class ConnectionChannelSocketImpl extends ConnectionChannelSocketBase<Str
 	@Override
 	protected void afterConnect() throws ConnectionStrategyException 
 	{
-		outputStream = new PrintWriter(out, true);
-		inputStream = new BufferedReader(new InputStreamReader(in));
-		exchangeStrategy = new ExchangeClientSendAndRecieve();
-		exchangeStrategy.setInputStream(inputStream);
-		exchangeStrategy.setOutputStream(outputStream);
+		outputWriter = new PrintWriter(out, true);
+		inputReader = new BufferedReader(new InputStreamReader(in));
 	}
 	
 	@Override
@@ -52,6 +49,10 @@ public class ConnectionChannelSocketImpl extends ConnectionChannelSocketBase<Str
 	{
 		try 
 		{
+			ExchangeStrategy<String,String,BufferedReader,PrintWriter> exchangeStrategy 
+				= new ExchangeClientSendAndRecieve();
+			exchangeStrategy.setInputReader(inputReader);
+			exchangeStrategy.setOutputWriter(outputWriter);
 			return exchangeStrategy.exchangeData(data);
 		} 
 		catch (ExchangeStrategyException e) 
@@ -66,10 +67,10 @@ public class ConnectionChannelSocketImpl extends ConnectionChannelSocketBase<Str
 		LOG.info("{} Client closing streams", logPrefix);
 		try 
 		{
-			outputStream.close();
-			outputStream = null;
-			inputStream.close();
-			inputStream = null;
+			outputWriter.close();
+			outputWriter = null;
+			inputReader.close();
+			inputReader = null;
 			LOG.info("{} Client closing streams has been successful", logPrefix);
 		} 
 		catch (IOException e) 

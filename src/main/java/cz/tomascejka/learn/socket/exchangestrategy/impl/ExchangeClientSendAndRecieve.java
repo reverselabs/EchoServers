@@ -14,7 +14,7 @@ import cz.tomascejka.learn.socket.exchangestrategy.ExchangeStrategyException;
  * @author tomas.cejka
  *
  */
-public class ExchangeClientSendAndRecieve implements ExchangeStrategy<String, String> {
+public class ExchangeClientSendAndRecieve implements ExchangeStrategy<String, String, BufferedReader, PrintWriter> {
 
 	@Override
 	public String exchangeData(String data) throws ExchangeStrategyException 
@@ -35,13 +35,15 @@ public class ExchangeClientSendAndRecieve implements ExchangeStrategy<String, St
 	private PrintWriter outputStream;
 	private BufferedReader inputStream;
 	
-	public void setOutputStream(PrintWriter outputStream) 
+	@Override
+	public void setInputReader(BufferedReader inputReader) 
 	{
-		this.outputStream = outputStream;
+		this.inputStream = (BufferedReader) inputReader;
 	}
-	
-	public void setInputStream(BufferedReader inputStream) 
+
+	@Override
+	public void setOutputWriter(PrintWriter outputWriter) 
 	{
-		this.inputStream = inputStream;
+		this.outputStream = (PrintWriter) outputWriter;
 	}
 }

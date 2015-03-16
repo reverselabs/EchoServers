@@ -14,7 +14,8 @@ package cz.tomascejka.learn.socket.connectionchannel;
  * @param <T> request data type
  * @param <E> response data type
  */
-public interface ConnectionChannel<T,E> {
+public interface ConnectionChannel<T,E> 
+{
 	/**
 	 * How to establish communication connection safely
 	 * @throws ConnectionStrategyException if anything fails

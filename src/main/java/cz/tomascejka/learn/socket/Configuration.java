@@ -4,7 +4,7 @@ public class Configuration {
 
 	private static final Configuration instance = new Configuration();
 	
-	private Configuration() 
+	public Configuration() 
 	{
 		//private constructor
 	}

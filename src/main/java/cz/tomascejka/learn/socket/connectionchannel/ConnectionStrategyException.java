@@ -1,6 +1,7 @@
 package cz.tomascejka.learn.socket.connectionchannel;
 
-public class ConnectionStrategyException extends Exception {
+public class ConnectionStrategyException extends Exception 
+{
 
 	private static final long serialVersionUID = 1L;
 
