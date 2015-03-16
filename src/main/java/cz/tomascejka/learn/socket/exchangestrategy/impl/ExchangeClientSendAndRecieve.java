@@ -45,4 +45,10 @@ public class ExchangeClientSendAndRecieve implements ExchangeStrategy<String, St
 			// streams will be closed by CommunicationChannel class
 		}
 	}
+	
+	@Override
+	public String toString() 
+	{
+		return getClass().getSimpleName();
+	}
 }

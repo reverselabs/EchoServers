@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import cz.tomascejka.learn.socket.channel.Channel;
 import cz.tomascejka.learn.socket.channel.ChannelStrategyException;
-import cz.tomascejka.learn.socket.channel.Configuration;
 /**
  * Using connection via TCP/IP by {@link Socket}
  * 

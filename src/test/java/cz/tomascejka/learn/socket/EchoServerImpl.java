@@ -6,7 +6,7 @@ import java.net.ServerSocket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.tomascejka.learn.socket.channel.Configuration;
+import cz.tomascejka.learn.socket.channel.impl.Configuration;
 
 /**
  * Facade to start echo server...

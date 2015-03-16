@@ -1,4 +1,4 @@
-package cz.tomascejka.learn.socket.channel;
+package cz.tomascejka.learn.socket.channel.impl;
 
 public class Configuration {
 

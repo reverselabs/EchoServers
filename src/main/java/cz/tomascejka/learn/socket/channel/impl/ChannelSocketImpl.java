@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.tomascejka.learn.socket.channel.ChannelStrategyException;
-import cz.tomascejka.learn.socket.channel.Configuration;
 import cz.tomascejka.learn.socket.exchangestrategy.ExchangeStrategy;
 import cz.tomascejka.learn.socket.exchangestrategy.ExchangeStrategyException;
 import cz.tomascejka.learn.socket.exchangestrategy.impl.ExchangeClientSendAndRecieve;
@@ -46,7 +45,7 @@ public class ChannelSocketImpl extends ChannelSocketBase<String,String>
 		{
 			ExchangeStrategy<String,String> exchangeStrategy = new ExchangeClientSendAndRecieve(in, out);
 //			ExchangeStrategy<byte[],byte[]> exchangeStrategy = new ExchangeClientHeaderBodyTrailer(in, out);
-			LOG.info("Used strategy: {}", exchangeStrategy.getClass().getSimpleName());
+			LOG.info("Used strategy: {}", exchangeStrategy);
 			return exchangeStrategy.exchangeData(data);
 		} 
 		catch (ExchangeStrategyException e) 

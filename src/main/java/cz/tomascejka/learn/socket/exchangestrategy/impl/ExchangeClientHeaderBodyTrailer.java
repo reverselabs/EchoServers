@@ -153,5 +153,10 @@ public class ExchangeClientHeaderBodyTrailer implements ExchangeStrategy<byte[],
                 (((int)(x[2])&0xFF)<<8)+
                 ((int)(x[3])&0xFF);
 	}
-	
+
+	@Override
+	public String toString() 
+	{
+		return getClass().getSimpleName();
+	}
 }

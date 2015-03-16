@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.tomascejka.learn.socket.channel.ChannelStrategyException;
-import cz.tomascejka.learn.socket.channel.Configuration;
 
 /**
  * <p>Only setup SO_LINGER on {@link Socket} with state=TRUE and timeout=0s. Socket during closing process
