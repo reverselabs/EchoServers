@@ -1,4 +1,4 @@
-package cz.tomascejka.learn.socket.client;
+package cz.tomascejka.learn.socket;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,7 +8,6 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.tomascejka.learn.socket.Configuration;
 import cz.tomascejka.learn.socket.connectionchannel.ConnectionChannel;
 import cz.tomascejka.learn.socket.connectionchannel.ConnectionStrategyException;
 import cz.tomascejka.learn.socket.connectionchannel.impl.ConnectionChannelSocketLingerFinAckPacket;

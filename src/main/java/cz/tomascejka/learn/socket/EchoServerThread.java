@@ -1,4 +1,4 @@
-package cz.tomascejka.learn.socket.server;
+package cz.tomascejka.learn.socket;
 
 import java.io.BufferedReader;
 import java.io.IOException;

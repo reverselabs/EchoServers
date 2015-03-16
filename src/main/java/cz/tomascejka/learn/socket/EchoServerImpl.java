@@ -1,12 +1,10 @@
-package cz.tomascejka.learn.socket.server;
+package cz.tomascejka.learn.socket;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import cz.tomascejka.learn.socket.Configuration;
 
 /**
  * Facade to start echo server...
