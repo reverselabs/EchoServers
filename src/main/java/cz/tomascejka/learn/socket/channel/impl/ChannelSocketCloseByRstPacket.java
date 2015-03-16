@@ -30,11 +30,11 @@ import cz.tomascejka.learn.socket.channel.ChannelStrategyException;
  * @see https://tools.ietf.org/html/rfc793#page-62 - Abort call
  *
  */
-public class ChannelSocketLingerRstPacket extends ChannelSocketImpl 
+public class ChannelSocketCloseByRstPacket extends ChannelSocketImpl 
 {
-	private static final Logger LOG = LoggerFactory.getLogger(ChannelSocketLingerRstPacket.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ChannelSocketCloseByRstPacket.class);
 
-	public ChannelSocketLingerRstPacket(Configuration configuration, String logPrefix) 
+	public ChannelSocketCloseByRstPacket(Configuration configuration, String logPrefix) 
 	{
 		super(configuration, logPrefix);
 	}

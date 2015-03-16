@@ -15,11 +15,11 @@ import cz.tomascejka.learn.socket.channel.ChannelStrategyException;
  * @author tomas.cejka
  *
  */
-public class ChannelSocketLingerFinAckPacket extends ChannelSocketImpl 
+public class ChannelSocketCloseByFinAckPacket extends ChannelSocketImpl 
 {
-	private static final Logger LOG = LoggerFactory.getLogger(ChannelSocketLingerFinAckPacket.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ChannelSocketCloseByFinAckPacket.class);
 
-	public ChannelSocketLingerFinAckPacket(Configuration configuration, String logPrefix) 
+	public ChannelSocketCloseByFinAckPacket(Configuration configuration, String logPrefix) 
 	{
 		super(configuration, logPrefix);
 	}
