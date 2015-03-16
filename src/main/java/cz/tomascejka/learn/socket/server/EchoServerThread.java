@@ -22,11 +22,6 @@ public class EchoServerThread extends Thread
 	@Override
 	public void run() 
 	{
-		listen();
-	}
-	
-	public final void listen() 
-	{
 		LOG.info("New communication thread started, id={}", Thread.currentThread().getId());
 		try 
 		{
