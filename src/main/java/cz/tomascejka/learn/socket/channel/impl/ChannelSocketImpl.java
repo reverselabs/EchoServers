@@ -1,4 +1,4 @@
-package cz.tomascejka.learn.socket.connectionchannel.impl;
+package cz.tomascejka.learn.socket.channel.impl;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.tomascejka.learn.socket.Configuration;
-import cz.tomascejka.learn.socket.connectionchannel.ConnectionStrategyException;
+import cz.tomascejka.learn.socket.channel.ChannelStrategyException;
 import cz.tomascejka.learn.socket.exchangestrategy.ExchangeStrategy;
 import cz.tomascejka.learn.socket.exchangestrategy.ExchangeStrategyException;
 import cz.tomascejka.learn.socket.exchangestrategy.impl.ExchangeClientSendAndRecieve;
@@ -23,24 +23,24 @@ import cz.tomascejka.learn.socket.exchangestrategy.impl.ExchangeClientSendAndRec
  * @author tomas.cejka
  *
  */
-public class ConnectionChannelSocketImpl extends ConnectionChannelSocketBase<String,String> 
+public class ChannelSocketImpl extends ChannelSocketBase<String,String> 
 {
-	private static final Logger LOG = LoggerFactory.getLogger(ConnectionChannelSocketImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ChannelSocketImpl.class);
 
-	public ConnectionChannelSocketImpl(Configuration configuration, String logPrefix) 
+	public ChannelSocketImpl(Configuration configuration, String logPrefix) 
 	{
 		super(configuration, logPrefix);
 	}
 
 	@Override
-	protected void afterConnect() throws ConnectionStrategyException 
+	protected void afterConnect() throws ChannelStrategyException 
 	{
 		// ... do nothing
 	}
 	
 	@Override
 	public String exchangeData(String data)
-			throws ConnectionStrategyException 
+			throws ChannelStrategyException 
 	{
 		try 
 		{
@@ -51,12 +51,12 @@ public class ConnectionChannelSocketImpl extends ConnectionChannelSocketBase<Str
 		} 
 		catch (ExchangeStrategyException e) 
 		{
-			throw new ConnectionStrategyException(e);
+			throw new ChannelStrategyException(e);
 		}
 	}
 	
 	@Override
-	public void afterClose() throws ConnectionStrategyException 
+	public void afterClose() throws ChannelStrategyException 
 	{
 		// do nothing ...
 	}

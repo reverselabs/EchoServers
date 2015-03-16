@@ -8,9 +8,9 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.tomascejka.learn.socket.connectionchannel.ConnectionChannel;
-import cz.tomascejka.learn.socket.connectionchannel.ConnectionStrategyException;
-import cz.tomascejka.learn.socket.connectionchannel.impl.ConnectionChannelSocketLingerFinAckPacket;
+import cz.tomascejka.learn.socket.channel.Channel;
+import cz.tomascejka.learn.socket.channel.ChannelStrategyException;
+import cz.tomascejka.learn.socket.channel.impl.ChannelSocketLingerFinAckPacket;
 
 public class EchoClientImpl 
 {
@@ -19,7 +19,7 @@ public class EchoClientImpl
 	public static void main(String[] args) throws Exception 
 	{
 		String logPrefix = "["+UUID.randomUUID().toString()+"]";
-		ConnectionChannel<String,String> channel = new ConnectionChannelSocketLingerFinAckPacket(new Configuration(), logPrefix);
+		Channel<String,String> channel = new ChannelSocketLingerFinAckPacket(new Configuration(), logPrefix);
 		
 		// input will be console
 		BufferedReader inputStream = new BufferedReader(new InputStreamReader(System.in));
@@ -54,8 +54,8 @@ public class EchoClientImpl
 	}
 	
 	@SuppressWarnings("rawtypes")
-	private static void closeResources(ConnectionChannel channel, BufferedReader stdIn, String logPrefix) 
-			throws ConnectionStrategyException
+	private static void closeResources(Channel channel, BufferedReader stdIn, String logPrefix) 
+			throws ChannelStrategyException
 	{
 		// close connection
 		channel.close();

@@ -1,4 +1,4 @@
-package cz.tomascejka.learn.socket.connectionchannel;
+package cz.tomascejka.learn.socket.channel;
 
 /**
  * Strategy, how to:
@@ -14,25 +14,25 @@ package cz.tomascejka.learn.socket.connectionchannel;
  * @param <T> request data type
  * @param <E> response data type
  */
-public interface ConnectionChannel<T,E> 
+public interface Channel<T,E> 
 {
 	/**
 	 * How to establish communication connection safely
-	 * @throws ConnectionStrategyException if anything fails
+	 * @throws ChannelStrategyException if anything fails
 	 */
-	public void connect() throws ConnectionStrategyException;
+	public void connect() throws ChannelStrategyException;
 	
 	/**
 	 * Send/receive data (communication dialog between client/server)
 	 * @param data request at server
 	 * @return response from server
-	 * @throws ConnectionStrategyException if anything fails
+	 * @throws ChannelStrategyException if anything fails
 	 */
-	public E sendAndRecieve(T data) throws ConnectionStrategyException;
+	public E sendAndRecieve(T data) throws ChannelStrategyException;
 	
 	/**
 	 * How to close communication connection safely
-	 * @throws ConnectionStrategyException if anything fails
+	 * @throws ChannelStrategyException if anything fails
 	 */
-	public void close() throws ConnectionStrategyException;
+	public void close() throws ChannelStrategyException;
 }

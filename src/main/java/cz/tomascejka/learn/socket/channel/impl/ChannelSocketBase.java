@@ -1,4 +1,4 @@
-package cz.tomascejka.learn.socket.connectionchannel.impl;
+package cz.tomascejka.learn.socket.channel.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.tomascejka.learn.socket.Configuration;
-import cz.tomascejka.learn.socket.connectionchannel.ConnectionChannel;
-import cz.tomascejka.learn.socket.connectionchannel.ConnectionStrategyException;
+import cz.tomascejka.learn.socket.channel.Channel;
+import cz.tomascejka.learn.socket.channel.ChannelStrategyException;
 /**
  * Using connection via TCP/IP by {@link Socket}
  * 
@@ -19,16 +19,16 @@ import cz.tomascejka.learn.socket.connectionchannel.ConnectionStrategyException;
  * @param <T> request data type
  * @param <E> response data type
  */
-public abstract class ConnectionChannelSocketBase<T,E> implements ConnectionChannel<T, E> 
+public abstract class ChannelSocketBase<T,E> implements Channel<T, E> 
 {
-	private static final Logger LOG = LoggerFactory.getLogger(ConnectionChannelSocketBase.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ChannelSocketBase.class);
 	protected Socket socket;
 	protected OutputStream out;
 	protected InputStream in;
 	protected final Configuration cfg;
 	protected final String logPrefix;
 	
-	public ConnectionChannelSocketBase(Configuration configuration, String logPrefix) 
+	public ChannelSocketBase(Configuration configuration, String logPrefix) 
 	{
 		this.cfg = configuration;
 		this.logPrefix = logPrefix;
@@ -37,9 +37,9 @@ public abstract class ConnectionChannelSocketBase<T,E> implements ConnectionChan
 	/**
 	 * It allows to modify flow before connection will be establish
 	 * 
-	 * @throws ConnectionStrategyException
+	 * @throws ChannelStrategyException
 	 */
-	protected void beforeConnect() throws ConnectionStrategyException
+	protected void beforeConnect() throws ChannelStrategyException
 	{
 		// for override ...
 	}
@@ -49,7 +49,7 @@ public abstract class ConnectionChannelSocketBase<T,E> implements ConnectionChan
 	 * @see cz.tomascejka.learn.socket.strategy.ConnectionStrategy#connect()
 	 */
 	@Override
-	public final void connect() throws ConnectionStrategyException 
+	public final void connect() throws ChannelStrategyException 
 	{
 		String serverHostname = cfg.getHost();
 		try 
@@ -72,9 +72,9 @@ public abstract class ConnectionChannelSocketBase<T,E> implements ConnectionChan
 	/**
 	 * It allows to modify flow after connection will be establish
 	 * 
-	 * @throws ConnectionStrategyException
+	 * @throws ChannelStrategyException
 	 */
-	protected void afterConnect() throws ConnectionStrategyException
+	protected void afterConnect() throws ChannelStrategyException
 	{
 		// for override ...
 	}
@@ -84,14 +84,14 @@ public abstract class ConnectionChannelSocketBase<T,E> implements ConnectionChan
 	 * @see cz.tomascejka.learn.socket.strategy.ConnectionStrategy#sendAndRecieve(java.lang.Object)
 	 */
 	@Override
-	public final E sendAndRecieve(T data) throws ConnectionStrategyException {
+	public final E sendAndRecieve(T data) throws ChannelStrategyException {
 		if(out == null)
 		{
-			throw new ConnectionStrategyException(logPrefix+ " Socket for writing is not created, is null. Cannot send message!");
+			throw new ChannelStrategyException(logPrefix+ " Socket for writing is not created, is null. Cannot send message!");
 		}
 		if(in == null)
 		{
-			throw new ConnectionStrategyException(logPrefix+ " Socket for reading is not created, is null. Cannot send message!");
+			throw new ChannelStrategyException(logPrefix+ " Socket for reading is not created, is null. Cannot send message!");
 		}
 
 		LOG.info("{} RQS send to host", logPrefix);
@@ -105,17 +105,17 @@ public abstract class ConnectionChannelSocketBase<T,E> implements ConnectionChan
 	 * @param data for request
 	 * @return response from server
 	 * 
-	 * @throws ConnectionStrategyException client decides what use cases are errors
+	 * @throws ChannelStrategyException client decides what use cases are errors
 	 */
-	protected abstract E exchangeData(T data) throws ConnectionStrategyException;
+	protected abstract E exchangeData(T data) throws ChannelStrategyException;
 
 	/**
 	 * It allows to client executing code before {@link Socket} is closed
 	 * 
-	 * @throws ConnectionStrategyException
+	 * @throws ChannelStrategyException
 	 * @throws IOException if anything fails during socket modifing
 	 */
-	protected void beforeClose() throws ConnectionStrategyException, IOException 
+	protected void beforeClose() throws ChannelStrategyException, IOException 
 	{
 		//for override ...
 	}
@@ -125,7 +125,7 @@ public abstract class ConnectionChannelSocketBase<T,E> implements ConnectionChan
 	 * @see cz.tomascejka.learn.socket.strategy.ConnectionStrategy#close()
 	 */
 	@Override
-	public final void close() throws ConnectionStrategyException 
+	public final void close() throws ChannelStrategyException 
 	{
 		LOG.info("{} Closing socket...", logPrefix);
 		if (socket != null) 
@@ -150,9 +150,9 @@ public abstract class ConnectionChannelSocketBase<T,E> implements ConnectionChan
 	/**
 	 * It allows to client executing code after {@link Socket} is closed
 	 * 
-	 * @throws ConnectionStrategyException
+	 * @throws ChannelStrategyException
 	 */
-	protected void afterClose() throws ConnectionStrategyException 
+	protected void afterClose() throws ChannelStrategyException 
 	{
 		//for override ...
 	}

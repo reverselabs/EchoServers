@@ -1,4 +1,4 @@
-package cz.tomascejka.learn.socket.connectionchannel.impl;
+package cz.tomascejka.learn.socket.channel.impl;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cz.tomascejka.learn.socket.Configuration;
-import cz.tomascejka.learn.socket.connectionchannel.ConnectionStrategyException;
+import cz.tomascejka.learn.socket.channel.ChannelStrategyException;
 
 /**
  * <p>Only setup SO_LINGER on {@link Socket} with state=TRUE and timeout=0s. Socket during closing process
@@ -16,17 +16,17 @@ import cz.tomascejka.learn.socket.connectionchannel.ConnectionStrategyException;
  * @author tomas.cejka
  *
  */
-public class ConnectionChannelSocketLingerFinAckPacket extends ConnectionChannelSocketImpl 
+public class ChannelSocketLingerFinAckPacket extends ChannelSocketImpl 
 {
-	private static final Logger LOG = LoggerFactory.getLogger(ConnectionChannelSocketLingerFinAckPacket.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ChannelSocketLingerFinAckPacket.class);
 
-	public ConnectionChannelSocketLingerFinAckPacket(Configuration configuration, String logPrefix) 
+	public ChannelSocketLingerFinAckPacket(Configuration configuration, String logPrefix) 
 	{
 		super(configuration, logPrefix);
 	}
 	
 	@Override
-	protected void beforeClose() throws ConnectionStrategyException, IOException 
+	protected void beforeClose() throws ChannelStrategyException, IOException 
 	{
 		boolean state = true;
 		int seconds = 1;
