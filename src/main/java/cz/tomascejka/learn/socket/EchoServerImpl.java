@@ -78,7 +78,7 @@ public class EchoServerImpl
 	
 	public static void main(String[] args) throws IOException 
 	{
-		Configuration cfg = Configuration.getInstance();
+		Configuration cfg = new Configuration();
 		new EchoServerImpl(cfg).open();
 	}	
 }

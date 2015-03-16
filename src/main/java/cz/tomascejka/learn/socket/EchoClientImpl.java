@@ -19,7 +19,7 @@ public class EchoClientImpl
 	public static void main(String[] args) throws Exception 
 	{
 		String logPrefix = "["+UUID.randomUUID().toString()+"]";
-		ConnectionChannel<String,String> channel = new ConnectionChannelSocketLingerFinAckPacket(Configuration.getInstance(), logPrefix);
+		ConnectionChannel<String,String> channel = new ConnectionChannelSocketLingerFinAckPacket(new Configuration(), logPrefix);
 		
 		// input will be console
 		BufferedReader inputStream = new BufferedReader(new InputStreamReader(System.in));

@@ -2,16 +2,9 @@ package cz.tomascejka.learn.socket;
 
 public class Configuration {
 
-	private static final Configuration instance = new Configuration();
-	
 	public Configuration() 
 	{
 		//private constructor
-	}
-	
-	public static Configuration getInstance()
-	{
-		return instance;
 	}
 	
 	public int getServerPort() 
