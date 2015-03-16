@@ -6,8 +6,8 @@ import java.io.PrintWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cz.tomascejka.learn.socket.Configuration;
 import cz.tomascejka.learn.socket.channel.ChannelStrategyException;
+import cz.tomascejka.learn.socket.channel.Configuration;
 import cz.tomascejka.learn.socket.exchangestrategy.ExchangeStrategy;
 import cz.tomascejka.learn.socket.exchangestrategy.ExchangeStrategyException;
 import cz.tomascejka.learn.socket.exchangestrategy.impl.ExchangeClientSendAndRecieve;
