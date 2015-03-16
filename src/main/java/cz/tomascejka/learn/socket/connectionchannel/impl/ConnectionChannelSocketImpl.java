@@ -1,8 +1,6 @@
 package cz.tomascejka.learn.socket.connectionchannel.impl;
 
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import org.slf4j.Logger;
@@ -28,8 +26,6 @@ import cz.tomascejka.learn.socket.exchangestrategy.impl.ExchangeClientSendAndRec
 public class ConnectionChannelSocketImpl extends ConnectionChannelSocketBase<String,String> 
 {
 	private static final Logger LOG = LoggerFactory.getLogger(ConnectionChannelSocketImpl.class);
-	private PrintWriter outputWriter;
-	private BufferedReader inputReader;
 
 	public ConnectionChannelSocketImpl(Configuration configuration, String logPrefix) 
 	{
@@ -39,8 +35,7 @@ public class ConnectionChannelSocketImpl extends ConnectionChannelSocketBase<Str
 	@Override
 	protected void afterConnect() throws ConnectionStrategyException 
 	{
-		outputWriter = new PrintWriter(out, true);
-		inputReader = new BufferedReader(new InputStreamReader(in));
+		// ... do nothing
 	}
 	
 	@Override
@@ -49,10 +44,9 @@ public class ConnectionChannelSocketImpl extends ConnectionChannelSocketBase<Str
 	{
 		try 
 		{
-			ExchangeStrategy<String,String,BufferedReader,PrintWriter> exchangeStrategy 
-				= new ExchangeClientSendAndRecieve();
-			exchangeStrategy.setInputReader(inputReader);
-			exchangeStrategy.setOutputWriter(outputWriter);
+			ExchangeStrategy<String,String> exchangeStrategy = new ExchangeClientSendAndRecieve(in, out);
+//			ExchangeStrategy<byte[],byte[]> exchangeStrategy = new ExchangeClientHeaderBodyTrailer(in, out);
+			LOG.info("Used strategy: {}", exchangeStrategy.getClass().getSimpleName());
 			return exchangeStrategy.exchangeData(data);
 		} 
 		catch (ExchangeStrategyException e) 
@@ -64,18 +58,6 @@ public class ConnectionChannelSocketImpl extends ConnectionChannelSocketBase<Str
 	@Override
 	public void afterClose() throws ConnectionStrategyException 
 	{
-		LOG.info("{} Client closing streams", logPrefix);
-		try 
-		{
-			outputWriter.close();
-			outputWriter = null;
-			inputReader.close();
-			inputReader = null;
-			LOG.info("{} Client closing streams has been successful", logPrefix);
-		} 
-		catch (IOException e) 
-		{
-			LOG.warn(logPrefix+ " Problem with closing streams e={}", e);
-		}
+		// do nothing ...
 	}
 }

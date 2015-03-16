@@ -1,6 +1,5 @@
 package cz.tomascejka.learn.socket.exchangestrategy;
 
-
 /**
  * Define how conversation can be done between client and server
  * @author tomas.cejka
@@ -8,7 +7,7 @@ package cz.tomascejka.learn.socket.exchangestrategy;
  * @param <T> request data
  * @param <E> response data
  */
-public interface ExchangeStrategy<T, E, R, W> 
+public interface ExchangeStrategy<T, E> 
 {
 	/**
 	 * Perform exchange between client and server
@@ -18,8 +17,4 @@ public interface ExchangeStrategy<T, E, R, W>
 	 * @throws ExchangeStrategyException
 	 */
 	E exchangeData(T data) throws ExchangeStrategyException;
-
-	void setInputReader(R inputReader);
-	
-	void setOutputWriter(W outputWriter);
 }

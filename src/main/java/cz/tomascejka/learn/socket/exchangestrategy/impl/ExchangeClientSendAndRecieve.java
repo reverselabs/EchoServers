@@ -2,6 +2,9 @@ package cz.tomascejka.learn.socket.exchangestrategy.impl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 
 import cz.tomascejka.learn.socket.exchangestrategy.ExchangeStrategy;
@@ -14,36 +17,32 @@ import cz.tomascejka.learn.socket.exchangestrategy.ExchangeStrategyException;
  * @author tomas.cejka
  *
  */
-public class ExchangeClientSendAndRecieve implements ExchangeStrategy<String, String, BufferedReader, PrintWriter> {
+public class ExchangeClientSendAndRecieve implements ExchangeStrategy<String, String> 
+{
+    private PrintWriter writer;
+	private BufferedReader reader;
 
+	public ExchangeClientSendAndRecieve(InputStream in, OutputStream out)
+    {
+    	this.writer = new PrintWriter(out, true);
+		this.reader = new BufferedReader(new InputStreamReader(in));
+    }
+	
 	@Override
 	public String exchangeData(String data) throws ExchangeStrategyException 
 	{
-		outputStream.println(data);// send request
+		writer.println(data);// send request
 		try 
 		{
-			String response = inputStream.readLine();// read response
-			return response;
+			return reader.readLine();// read response
 		} 
 		catch (IOException e) 
 		{
 			throw new ExchangeStrategyException("Problem with reading response", e);
 		}
-	}
-
-	// --- IoC
-	private PrintWriter outputStream;
-	private BufferedReader inputStream;
-	
-	@Override
-	public void setInputReader(BufferedReader inputReader) 
-	{
-		this.inputStream = (BufferedReader) inputReader;
-	}
-
-	@Override
-	public void setOutputWriter(PrintWriter outputWriter) 
-	{
-		this.outputStream = (PrintWriter) outputWriter;
+		finally
+		{
+			// streams will be closed by CommunicationChannel class
+		}
 	}
 }
